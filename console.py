@@ -43,6 +43,10 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
+            int_attr = ['number_rooms',
+                        'number_bathrooms',
+                        'max_guest',
+                        'price_by_night']
             attr = []
             value = []
             for param in my_list[1:]:
@@ -50,7 +54,14 @@ class HBNBCommand(cmd.Cmd):
                 attr.append(test[0])
                 value.append(test[1].replace("\"", ""))
             for i in range(len(attr)):
-                setattr(obj, attr[i], value[i].replace("_", "  "))
+                if attr[i] == "latitude" or attr[i] == "longitude":
+                    print("float conversion")
+                    setattr(obj, attr[i], float(value[i]))
+                elif attr[i] in int_attr:
+                    print("integer conversion")
+                    setattr(obj, attr[i], int(value[i]))
+                else:
+                    setattr(obj, attr[i], value[i].replace("_", "  "))
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
