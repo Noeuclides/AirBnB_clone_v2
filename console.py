@@ -55,10 +55,8 @@ class HBNBCommand(cmd.Cmd):
                 value.append(test[1].replace("\"", ""))
             for i in range(len(attr)):
                 if attr[i] == "latitude" or attr[i] == "longitude":
-                    print("float conversion")
                     setattr(obj, attr[i], float(value[i]))
                 elif attr[i] in int_attr:
-                    print("integer conversion")
                     setattr(obj, attr[i], int(value[i]))
                 else:
                     setattr(obj, attr[i], value[i].replace("_", "  "))
