@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is the place class"""
 from models.base_model import BaseModel
+from sqlalchemy.orm import relationship
 
 
 class Place(BaseModel):
@@ -29,3 +30,9 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []
+    reviews = relationship("Review", cascade=delete, backref='place')
+
+    @property
+    def reviews(self):
+        """reviews in FileStorage"""
+        
