@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """This is the user class"""
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String
-import storage
+import models
 from sqlalchemy.orm import relationship
 
 
-class User(BaseModel):
+class User(BaseModel, Base):
     """This is the class for user
     Attributes:
         email: email address
@@ -19,4 +19,5 @@ class User(BaseModel):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
-    places = relationship("Place", cascade=delete, backref="user")
+    places = relationship("Place", cascade='delete', backref="user")
+    reviews = relationship("Review", cascade='delete', backref='user')
