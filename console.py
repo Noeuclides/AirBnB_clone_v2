@@ -45,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            if my_list[0] in self.all_classes:
+            if my_list[0] not in self.all_classes:
                 raise NameError()
             obj = eval("{}()".format(my_list[0]))
             for param in my_list[1:]:
@@ -134,12 +134,12 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
         """
+
         objects = models.storage.all()
         my_list = []
         if not line:
             for key in objects:
                 my_list.append(objects[key])
-            print(my_list)
             return
         try:
             args = line.split(" ")
