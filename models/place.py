@@ -2,6 +2,7 @@
 """This is the place class"""
 from models.base_model import BaseModel
 from sqlalchemy.orm import relationship
+import models
 
 
 class Place(BaseModel):
@@ -35,4 +36,9 @@ class Place(BaseModel):
     @property
     def reviews(self):
         """reviews in FileStorage"""
-        
+        review_list = []
+        dict_review = models.storage.all(models.Review)
+        for key, value in dict_review:
+            if value.place_id == self.id:
+                review_list.append(value)
+        return(review_list)
