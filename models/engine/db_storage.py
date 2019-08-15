@@ -12,7 +12,8 @@ from console import all_classes
 from sqlalchemy import Column, Integer, String, create_engin
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy as db
-import sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session
 
 
 class DBStorage:
@@ -34,8 +35,7 @@ class DBStorage:
             drop_all(tables)
 
     def all(self, cls=None):
-        self.__session = sessionmaker(bind=engine)
-        s1 = self.__session()
+        s1 = session()
         store_dict = {}
         if cls is not None:
             objects = s1.query(cls).all()
@@ -52,4 +52,23 @@ class DBStorage:
             return store_dict
 
     def new(self, obj):
+        '''add object'''
+        session().add(obj)
 
+    def save(self):
+        '''save the session'''
+        session().commit()
+
+    def delete(self, obj=None):
+        '''delete the obj'''
+        if obj is not None:
+            sel = session.query(obj).all()
+            for ob in sel:
+                session.delete(ob)
+            self.save()
+
+    def reload(self):
+        '''reload database'''
+        Base.metadata.create_all(engine)
+        self.__session = sessionmaker(bind=engine, expire_on_commit=False)
+        session = scoped_session(self.__session)
