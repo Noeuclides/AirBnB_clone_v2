@@ -16,8 +16,8 @@ if 'HBNB_TYPE_STORAGE' in environ:
         from .engine.db_storage import DBStorage
         storage = DBStorage()
         storage.reload()
-    else:
-        print("filestorage if:")
-        from .engine.file_storage import FileStorage
-        storage = FileStorage()
-        storage.reload()
+else:
+    print("filestorage if:")
+    from .engine.file_storage import FileStorage
+    storage = FileStorage()
+    storage.reload()

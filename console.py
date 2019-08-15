@@ -45,11 +45,9 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+            if my_list[0] in self.all_classes:
+                raise NameError()
             obj = eval("{}()".format(my_list[0]))
-            int_attr = ['number_rooms',
-                        'number_bathrooms',
-                        'max_guest',
-                        'price_by_night']
             for param in my_list[1:]:
                 test = param.split("=")
                 attr.append(test[0])
