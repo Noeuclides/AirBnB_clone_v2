@@ -3,6 +3,8 @@
 from models.base_model import BaseModel
 from sqlalchemy import Column, Integer, String
 import storage
+from sqlalchemy.orm import relationship
+
 
 class User(BaseModel):
     """This is the class for user
@@ -17,6 +19,4 @@ class User(BaseModel):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
-
-    def __del__(self):
-        storage.delete(Place)
+    places = relationship("Place", cascade=delete, backref="user")
