@@ -54,10 +54,10 @@ class HBNBCommand(cmd.Cmd):
                 attr.append(test[0])
                 value.append(test[1].replace("\"", ""))
             for i in range(len(attr)):
-                if attr[i] == "latitude" or attr[i] == "longitude":
-                    setattr(obj, attr[i], float(value[i]))
-                elif attr[i] in int_attr:
+                if value[i].isdigit():
                     setattr(obj, attr[i], int(value[i]))
+                elif value[i].replace('.', '', 1).isdigit():
+                    setattr(obj, attr[i], float(value[i]))
                 else:
                     setattr(obj, attr[i], value[i].replace("_", "  "))
             obj.save()
