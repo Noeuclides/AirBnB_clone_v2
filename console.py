@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """This is the console for AirBnB"""
+
 import cmd
-from models import storage
+import models
 from datetime import datetime
 from models.base_model import BaseModel
 from models.user import User
@@ -39,25 +40,23 @@ class HBNBCommand(cmd.Cmd):
             NameError: when there is no object taht has the name
         """
         try:
+            attr = []
+            value = []
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+            if my_list[0] in self.all_classes:
+                raise NameError()
             obj = eval("{}()".format(my_list[0]))
-            int_attr = ['number_rooms',
-                        'number_bathrooms',
-                        'max_guest',
-                        'price_by_night']
-            attr = []
-            value = []
             for param in my_list[1:]:
                 test = param.split("=")
                 attr.append(test[0])
                 value.append(test[1].replace("\"", ""))
             for i in range(len(attr)):
-                if attr[i] == "latitude" or attr[i] == "longitude":
-                    setattr(obj, attr[i], float(value[i]))
-                elif attr[i] in int_attr:
+                if value[i].isdigit():
                     setattr(obj, attr[i], int(value[i]))
+                elif value[i].replace('.', '', 1).isdigit():
+                    setattr(obj, attr[i], float(value[i]))
                 else:
                     setattr(obj, attr[i], value[i].replace("_", "  "))
             obj.save()
@@ -83,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
                 raise NameError()
             if len(my_list) < 2:
                 raise IndexError()
-            objects = storage.all()
+            objects = models.storage.all()
             key = my_list[0] + '.' + my_list[1]
             if key in objects:
                 print(objects[key])
@@ -135,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
         """
-        objects = storage.all()
+        objects = models.storage.all()
         my_list = []
         if not line:
             for key in objects:
@@ -256,7 +255,7 @@ class HBNBCommand(cmd.Cmd):
             elif my_list[1][:6] == "update":
                 args = self.strip_clean(my_list)
                 if isinstance(args, list):
-                    obj = storage.all()
+                    obj = models.storage.all()
                     key = args[0] + ' ' + args[1]
                     for k, v in args[2].items():
                         self.do_update(key + ' "{}" "{}"'.format(k, v))
