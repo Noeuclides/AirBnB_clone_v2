@@ -45,11 +45,9 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+            if my_list[0] not in self.all_classes:
+                raise NameError()
             obj = eval("{}()".format(my_list[0]))
-            int_attr = ['number_rooms',
-                        'number_bathrooms',
-                        'max_guest',
-                        'price_by_night']
             for param in my_list[1:]:
                 test = param.split("=")
                 attr.append(test[0])
@@ -136,12 +134,12 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
         """
+
         objects = models.storage.all()
         my_list = []
         if not line:
             for key in objects:
                 my_list.append(objects[key])
-            print(my_list)
             return
         try:
             args = line.split(" ")
