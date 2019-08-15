@@ -1,9 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/python1
 """This is the state class"""
 import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship, backref
+
 
 class State(BaseModel, Base):
     """This is the class for State
@@ -16,10 +17,9 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
-        '''getter attribute to return list of city instance'''
+        """getter attribute to return list of city instance"""
         city_list = []
-        for city in models.storage:
-            if state_id == self.id:
-                city_list.append(city)
+        for key, value in models.storage.all(models.City).items():
+            if value.state_id == self.id:
+                city_list.append(value)
         return(city_list)
-

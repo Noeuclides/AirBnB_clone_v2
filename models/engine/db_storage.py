@@ -13,7 +13,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
-from os import environ
+from os import environ, getenv
 
 
 class DBStorage:
@@ -24,25 +24,26 @@ class DBStorage:
         __Session: None
     """
     __engine = None
-    __Session = None
+    __session = None
 
-    all_classes = {"BaseModel", "User", "State", "City",
-                   "Amenity", "Place", "Review"}
+    all_classes = {State, City}
 
     def __init__(self):
+        """initialize DBStorage class"""
         self.__engine = create_engine(
             'mysql+mysqldb://{}:{}@{}/{}'.format(
-                environ['HBNB_MYSQL_USER'],
-                environ['HBNB_MYSQL_PWD'],
-                environ['HBNB_MYSQL_HOST'],
-                environ['HBNB_MYSQL_DB'],
+                getenv('HBNB_MYSQL_USER'),
+                getenv('HBNB_MYSQL_PWD'),
+                getenv('HBNB_MYSQL_HOST'),
+                getenv('HBNB_MYSQL_DB'),
                 pool_pre_ping=True))
         if "HBNB_ENV" in environ:
             if environ['HBNB_ENV'] == 'test':
-                Base.metadata.drop_all(self.__engine)
+                Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
-        s1 = self.__session()
+        """show all instance of a class"""
+        s1 = self.__session
         store_dict = {}
         if cls is not None:
             objects = s1.query(cls).all()
@@ -52,35 +53,30 @@ class DBStorage:
             return store_dict
         else:
             for a_class in self.all_classes:
-                objects = s1.query(eval(a_class)).all()
-                print(objects)
+                objects = s1.query(a_class).all()
                 for obj in objects:
                     key = type(a_class).__name__ + "." + obj.id
                     store_dict.update({key: obj})
             return store_dict
 
     def new(self, obj):
-        '''add object'''
-        self.__session().add(obj)
-        #Base.metadata.create_all(self.__engine)
+        """add object"""
+        self.__session.add(obj)
 
     def save(self):
-        '''save the session'''
-        self.__session().commit()
+        """save the session"""
+        self.__session.commit()
 
     def delete(self, obj=None):
-        '''delete the obj'''
+        """delete the obj"""
         if obj is not None:
-            sel = self.__session().query(obj).all()
+            sel = self.__session.query(obj).all()
             for ob in sel:
-                self.__session().delete(ob)
+                self.__session.delete(ob)
             self.save()
 
     def reload(self):
-        '''reload database'''
-        print("reload before Base.metadata")
-        print(self.__engine)
-        #Base.metadata.create_all(self.__engine)
-        print("reload after Base.metadata")
-        self.__session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        scoped_session(self.__session)
+        """reload database"""
+        Base.metadata.create_all(self.__engine)
+        session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        self.__session = scoped_session(session)()
