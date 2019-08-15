@@ -29,6 +29,7 @@ class DBStorage:
     all_classes = {State, City}
 
     def __init__(self):
+        """initialize DBStorage class"""
         self.__engine = create_engine(
             'mysql+mysqldb://{}:{}@{}/{}'.format(
                 getenv('HBNB_MYSQL_USER'),
@@ -41,6 +42,7 @@ class DBStorage:
                 Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
+        """show all instance of a class"""
         s1 = self.__session
         store_dict = {}
         if cls is not None:
@@ -61,15 +63,15 @@ class DBStorage:
             return store_dict
 
     def new(self, obj):
-        '''add object'''
+        """add object"""
         self.__session.add(obj)
 
     def save(self):
-        '''save the session'''
+        """save the session"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        '''delete the obj'''
+        """delete the obj"""
         if obj is not None:
             sel = self.__session.query(obj).all()
             for ob in sel:
@@ -77,7 +79,7 @@ class DBStorage:
             self.save()
 
     def reload(self):
-        '''reload database'''
+        """reload database"""
         print("reload before Base.metadata")
         print(self.__engine)
         Base.metadata.create_all(self.__engine)
