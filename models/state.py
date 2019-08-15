@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This is the state class"""
 import models
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship, backref
 

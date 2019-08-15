@@ -13,10 +13,8 @@ class BaseModel:
     for other classes
     """
     id = Column(String(50), nullable=False, primary_key=True)
-    created_at = DateTime(nullable=False,
-                        default=datetime.utcnow())
-    updated_at = DateTime(nullable=False,
-                        default=datetime.utcnow())
+    created_at = Column(nullable=False, default=datetime.utcnow())
+    updated_at = Column(nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Instantiation of base model class
