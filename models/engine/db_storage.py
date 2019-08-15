@@ -46,9 +46,7 @@ class DBStorage:
         s1 = self.__session
         store_dict = {}
         if cls is not None:
-            print("cls in all method: ", cls)
             objects = s1.query(cls).all()
-            print(objects)
             for obj in objects:
                 key = type(obj).__name__ + "." + obj.id
                 store_dict.update({key: obj})
@@ -56,7 +54,6 @@ class DBStorage:
         else:
             for a_class in self.all_classes:
                 objects = s1.query(a_class).all()
-                print(objects)
                 for obj in objects:
                     key = type(a_class).__name__ + "." + obj.id
                     store_dict.update({key: obj})
@@ -80,9 +77,6 @@ class DBStorage:
 
     def reload(self):
         """reload database"""
-        print("reload before Base.metadata")
-        print(self.__engine)
         Base.metadata.create_all(self.__engine)
-        print("reload after Base.metadata")
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(session)()
