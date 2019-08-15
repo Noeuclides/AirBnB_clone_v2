@@ -9,14 +9,15 @@ from models.place import Place
 from models.review import Review
 from os import environ
 
-print(type(environ['HBNB_TYPE_STORAGE']))
-if environ['HBNB_TYPE_STORAGE'] == 'db':
-    print("enviro DB: ")
-    from .engine.db_storage import DBStorage
-    storage = DBStorage()
-    storage.reload()
-else:
-    print("filestorage if:")
-    from .engine.file_storage import FileStorage
-    storage = FileStorage()
-    storage.reload()
+
+if 'HBNB_TYPE_STORAGE' in environ:
+    if environ['HBNB_TYPE_STORAGE'] == 'db':
+        print("enviro DB: ")
+        from .engine.db_storage import DBStorage
+        storage = DBStorage()
+        storage.reload()
+    else:
+        print("filestorage if:")
+        from .engine.file_storage import FileStorage
+        storage = FileStorage()
+        storage.reload()

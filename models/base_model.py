@@ -14,6 +14,7 @@ class BaseModel:
     for other classes
     """
     id = Column(String(50), nullable=False, primary_key=True)
+    print("creating basemodel")
     created_at = Column(nullable=False, default=datetime.utcnow())
     updated_at = Column(nullable=False, default=datetime.utcnow())
 
