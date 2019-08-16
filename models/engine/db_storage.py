@@ -55,7 +55,7 @@ class DBStorage:
             for a_class in self.all_classes:
                 objects = s1.query(a_class).all()
                 for obj in objects:
-                    key = type(a_class).__name__ + "." + obj.id
+                    key = a_class.__name__ + "." + obj.id
                     store_dict.update({key: obj})
             return store_dict
 
