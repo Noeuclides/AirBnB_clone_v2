@@ -42,11 +42,11 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    reviews = relationship("Review", cascade='delete', backref='place')
+    reviews = relationship("Review", backref='place', cascade='delete')
     amenities = relationship(
         'Amenity',
         secondary=place_amenity,
-        viewonly=False)
+        viewonly=False, backref='place_amenities')
 
     @property
     def reviews(self):
