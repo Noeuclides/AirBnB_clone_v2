@@ -58,7 +58,7 @@ class HBNBCommand(cmd.Cmd):
                 elif value[i].replace('.', '', 1).isdigit():
                     setattr(obj, attr[i], float(value[i]))
                 else:
-                    setattr(obj, attr[i], value[i].replace("_", "  "))
+                    setattr(obj, attr[i], value[i].replace("_", " "))
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
