@@ -51,14 +51,20 @@ class HBNBCommand(cmd.Cmd):
             for param in my_list[1:]:
                 test = param.split("=")
                 attr.append(test[0])
-                value.append(test[1].replace("\"", ""))
+                value.append(test[1])
             for i in range(len(attr)):
-                if value[i].isdigit():
-                    setattr(obj, attr[i], int(value[i]))
-                elif value[i].replace('.', '', 1).isdigit():
-                    setattr(obj, attr[i], float(value[i]))
-                else:
-                    setattr(obj, attr[i], value[i].replace("_", " "))
+                value[i] = value[i].replace("_", " ")
+                try:
+                    value[i] = int(value[i])
+                except:
+                    try:
+                        value[i] = float(value[i])
+                    except:
+                        pass
+                try:
+                    setattr(obj, attr[i], value[i].replace("\"", ""))
+                except:
+                    setattr(obj, attr[i], value[i])
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
