@@ -56,14 +56,14 @@ class HBNBCommand(cmd.Cmd):
                 value[i] = value[i].replace("_", " ")
                 try:
                     value[i] = int(value[i])
-                except:
+                except BaseException:
                     try:
                         value[i] = float(value[i])
-                    except:
+                    except BaseException:
                         pass
                 try:
                     setattr(obj, attr[i], value[i].replace("\"", ""))
-                except:
+                except BaseException:
                     setattr(obj, attr[i], value[i])
             obj.save()
             print("{}".format(obj.id))
