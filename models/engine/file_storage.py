@@ -27,17 +27,10 @@ class FileStorage:
             or
             returns a dictionary of __object
         """
-        val_dict = {}
-        dup_dict = {}
-        for key in self.__objects:
-            val_dict = self.__objects[key].__dict__
-            if "_sa_instance_state" in val_dict:
-                del val_dict["_sa_instance_state"]
-            dup_dict[key] = val_dict
-        if cls in dup_dict:
-            return (dup_dict[cls])
+        if cls in self.__objects:
+            return (self.__objects[cls])
         else:
-            return (dup_dict)
+            return (self.__objects)
 
     def new(self, obj):
         """sets __object to given obj
