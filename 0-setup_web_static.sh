@@ -6,7 +6,7 @@ if [ ! -x /usr/sbin/nginx ];then
 fi
 mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
-echo "Holberton School" | sudo tee /data/web_static/releases/test/index.html
+echo "Holberton School" | sudo tee /data/web_static/releases/test/index.html > /dev/null
 ln -snf /data/web_static/releases/test/ /data/web_static/current 
 sudo chown -R ubuntu:ubuntu /data 
 sed -i '37a\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/hbnb_static;\n\t}' /etc/nginx/sites-enabled/default
