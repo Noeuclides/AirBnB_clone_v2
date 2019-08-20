@@ -16,7 +16,7 @@ def do_pack():
     now = datetime.now()
     file = 'web_static_' + now.strftime("%Y%m%d%H%M%S") + '.' + 'tgz'
     local("mkdir -p versions")
-    check = local("tar -cvzf versions/{file} web_static".format(file=file))
+    check = local("tar -cvzf versions/{} web_static".format(file))
     if check is not None:
         return file
     else:
@@ -36,21 +36,21 @@ def do_deploy(archive_path):
     folder = file[1].split('.')
     print(folder[0])
     oper.append(
-        run("mkdir -p /data/web_static/releases/{folder}/".format(
-            folder=folder[0])))
+        run("mkdir -p /data/web_static/releases/{}".format(
+            folder[0])))
     oper.append(run(
-        "tar -xzf /tmp/{file} -C /data/web_static/releases/{folder}/".format(
-            file=file[1], folder=folder[0])))
-    oper.append(run("rm /tmp/{file}".format(file=file[1])))
-    oper.append(run("mv /data/web_static/releases/{folder}/web_static/* /data/web_static/releases/{folder}".format(
-        folder=folder[0])))
+        "tar -xzf /tmp/{file} -C /data/web_static/releases/{}".format(
+            file[1], folder[0])))
+    oper.append(run("rm /tmp/{}".format(file[1])))
+    oper.append(run("mv /data/web_static/releases/{0}/web_static/* /data/web_static/releases/{0}".format(
+        folder[0])))
     oper.append(run(
-        "rm -rf /data/web_static/releases/{folder}/web_static".format(
-            folder=folder[0])))
+        "rm -rf /data/web_static/releases/{}/web_static".format(
+            folder[0])))
     oper.append(run("rm -rf /data/web_static/current"))
     oper.append(run(
-        "ln -s /data/web_static/releases/{folder}/ /data/web_static/current".format(
-            folder=folder[0])))
+        "ln -s /data/web_static/releases/{}/ /data/web_static/current".format(
+            folder[0])))
     print(oper)
     for op in oper:
         if op is False:
