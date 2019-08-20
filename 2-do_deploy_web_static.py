@@ -36,10 +36,10 @@ def do_deploy(archive_path):
     folder = file[1].split('.')
     print(folder[0])
     oper.append(
-        run("mkdir -p /data/web_static/releases/{folder}".format(
+        run("mkdir -p /data/web_static/releases/{folder}/".format(
             folder=folder[0])))
     oper.append(run(
-        "tar -xzf /tmp/{file} .C /data/web_static/releases/{folder}/".format(
+        "tar -xzf /tmp/{file} -C /data/web_static/releases/{folder}/".format(
             file=file[1], folder=folder[0])))
     oper.append(run("rm /tmp/{file}".format(file=file[1])))
     oper.append(run("mv /data/web_static/releases/{folder}/web_static/* /data/web_static/releases/{folder}".format(
