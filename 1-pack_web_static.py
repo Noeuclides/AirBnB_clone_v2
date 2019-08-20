@@ -10,6 +10,7 @@ def do_pack():
     '''
     now = datetime.now()
     file = 'web_static_' + now.strftime("%Y%m%d%H%M%S") + '.' + 'tgz'
+    local("mkdir -p versions")
     check = local("tar -cvzf versions/{file} web_static".format(file=file))
     if check is not None:
         return file
