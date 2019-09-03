@@ -25,9 +25,8 @@ def hbnb():
 def c_path(text):
     '''c plus text
     '''
-    text.replace('_', ' ')
-    return ("C {}".format(text))
-
+    new = text.replace('_', ' ')
+    return ("C {}".format(new))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug = True, host='0.0.0.0', port=5000)
