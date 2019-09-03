@@ -26,8 +26,8 @@ def hbnb():
 def c_path(text):
     '''c plus text
     '''
-    text.replace('_', ' ')
-    return ("C {}".format(text))
+    new = text.replace('_', ' ')
+    return ("C {}".format(new))
 
 
 @app.route('/python')
@@ -38,8 +38,8 @@ def python_path(text=None):
     if text is None:
         return(redirect(url_for('python_path', text='is cool')))
     else:
-        text.replace('_', ' ')
-        return ("Python {}".format(text))
+        new = text.replace('_', ' ')
+        return ("Python {}".format(new))
 
 
 if __name__ == '__main__':
