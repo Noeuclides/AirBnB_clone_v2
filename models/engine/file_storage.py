@@ -68,3 +68,9 @@ class FileStorage:
             del_obj = type(obj).__name__ + "." + obj.id
             if del_obj in self.__objects:
                 self.__objects.pop(del_obj)
+
+
+    def close(self):
+        """close method
+        """
+        reload()
