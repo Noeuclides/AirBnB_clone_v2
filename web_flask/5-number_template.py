@@ -2,7 +2,7 @@
 '''start a Flask web app
 '''
 from flask import Flask as fsk
-from flask import redirect, url_for, abort
+from flask import redirect, url_for, abort, render_template
 
 app = fsk(__name__)
 app.url_map.strict_slashes = False
@@ -48,6 +48,17 @@ def number(n):
     '''
     try:
         return("{} is a number".format(int(n)))
+    except BaseException:
+        abort(404)
+
+
+@app.route('/number_template/<n>')
+def number_template(n):
+    '''template path
+    '''
+    try:
+        n = int(n)
+        return(render_template('5-number.html', name=n))
     except BaseException:
         abort(404)
 
