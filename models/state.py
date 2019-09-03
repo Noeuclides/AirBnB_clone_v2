@@ -1,4 +1,4 @@
-#!/usr/bin/python1
+#!/usr/bin/python3
 """This is the state class"""
 import models
 from models.base_model import BaseModel, Base
