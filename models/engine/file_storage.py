@@ -69,7 +69,6 @@ class FileStorage:
             if del_obj in self.__objects:
                 self.__objects.pop(del_obj)
 
-
     def close(self):
         """close method
         """
