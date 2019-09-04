@@ -2,7 +2,7 @@
 '''start a Flask web app
 '''
 from flask import Flask as fsk
-from flask import redirect, url_for, abort, render_template
+from flask import render_template
 from models import storage
 
 app = fsk(__name__)
@@ -13,11 +13,9 @@ app.url_map.strict_slashes = False
 def states_list():
     '''list cities in state
     '''
-    try:
-        state_dict = storage.all("State")
-        return(render_template('7-states_list.html', states=state_dict))
-    except BaseException:
-        abort(404)
+    state_dict = storage.all("State")
+    return(render_template('7-states_list.html', states=state_dict))
+
 
 @app.teardown_appcontext
 def close_():
