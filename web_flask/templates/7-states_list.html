@@ -6,11 +6,9 @@
     <BODY>
         <H1>States</H1>
         <UL>
-        {% for key, val in states.items() %}
-            {% if key == 'id' %}
-            <LI>{{ value|e }}:
-            {%if key == 'name' %} 
-            <B>{{ value|e }}</B></LI>
+        {% for key in states | sort %}
+                <LI>{{ states[key].id }}: <B>{{ states[key].name }}</B></LI>
+	{% endfor %}
         </UL>
     </BODY>
 </HTML>

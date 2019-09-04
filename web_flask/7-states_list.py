@@ -18,11 +18,11 @@ def states_list():
 
 
 @app.teardown_appcontext
-def close_():
+def close_(exception=None):
     """close session
     """
     storage.close()
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000)
