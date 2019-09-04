@@ -46,7 +46,7 @@ class DBStorage:
         s1 = self.__session
         store_dict = {}
         if cls is not None:
-            objects = s1.query(cls).all()
+            objects = s1.query(eval(cls)).all()
             for obj in objects:
                 key = type(obj).__name__ + "." + obj.id
                 store_dict.update({key: obj})
