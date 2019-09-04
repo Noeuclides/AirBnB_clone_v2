@@ -4,10 +4,13 @@
         <TITLE>HBNB</TITLE>
     </HEAD>
     <BODY>
-    {% if number % 2 != 0 %}
-        <H1>Number: {{ number }} is odd</H1>
-    {% else %}
-        <H1>Number: {{ number }} is even</H1>
-    {% endif %}
+        <H1>States</H1>
+        <UL>
+        {% for key, val in states.items() %}
+            {% if key == 'id' %}
+            <LI>{{ value|e }}:
+            {%if key == 'name' %} 
+            <B>{{ value|e }}</B></LI>
+        </UL>
     </BODY>
 </HTML>
