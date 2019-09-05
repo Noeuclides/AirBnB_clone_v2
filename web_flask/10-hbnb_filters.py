@@ -56,13 +56,8 @@ def hbnb_filters():
     cities_dict = storage.all("City")
     amenity_dict = storage.all("Amenity")
 
-    for k, v in amenity_dict.items():
-        print("KEY: ", k)
-        print("VALUE: ", v)
-
-    return(render_template('10-hbnb_filters',
-                           cities=cities_dict, states=state_dict,
-                           amenities=amenity_dict))
+    return(render_template('10-hbnb_filters.html',
+                           cities=cities_dict, states=state_dict, amenities=amenity_dict))
 
 
 @app.teardown_appcontext
