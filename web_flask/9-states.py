@@ -2,14 +2,14 @@
 '''start a Flask web app
 '''
 from flask import Flask as fsk
-from flask import render_template
+from flask import render_template, abort
 from models import storage
 
 app = fsk(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.route('/states_list')
+@app.route('/states')
 def states_list():
     '''list states
     '''
@@ -26,21 +26,25 @@ def cities_list():
     return(render_template('8-cities_by_states.html',
                            cities=cities_dict, states=state_dict))
 
+
 @app.route('/states/<id>')
 def states_id(id):
     '''list state by id
     '''
-    state_dict = storage.all("State")
-    cities_dict = storage.all("City")
-    print(type(id))
+    try:
+        state_dict = storage.all("State")
+        cities_dict = storage.all("City")
 
-    for k, v in state_dict.items():
-        print("KEY: ", k.split('.')[1])
-        print()
-        print("VALUE", v)
-    return(render_template('9-states.html',
-                           cities=cities_dict, states=state_dict))
+        for k, v in state_dict.items():
+            key = k.split('.')[1]
+            if key == id:
+                obj = state_dict[k]
 
+        return(render_template('9-states.html',
+                               cities=cities_dict, states=obj))
+    except BaseException:
+        return(render_template('9-states.html',
+                               cities=cities_dict, states=None))
 
 
 @app.teardown_appcontext
