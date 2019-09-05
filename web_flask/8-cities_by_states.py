@@ -11,10 +11,20 @@ app.url_map.strict_slashes = False
 
 @app.route('/states_list')
 def states_list():
-    '''list cities in state
+    '''list states
     '''
     state_dict = storage.all("State")
     return(render_template('7-states_list.html', states=state_dict))
+
+
+@app.route('/cities_by_states')
+def cities_list():
+    '''list cities in state
+    '''
+    state_dict = storage.all("State")
+    cities_dict = storage.all("City")
+    return(render_template('8-cities_by_states.html',
+                           cities=cities_dict, states=state_dict))
 
 
 @app.teardown_appcontext
