@@ -27,8 +27,13 @@ class FileStorage:
             or
             returns a dictionary of __object
         """
-        if cls in self.__objects:
-            return (self.__objects[cls])
+        if cls is not None:
+            new_dict = {}
+            for k, v in self.__objects.items():
+                key = k.split('.')
+                if cls.__name__ == key[0]:
+                    new_dict.update({k: v})
+            return (new_dict)
         else:
             return (self.__objects)
 
