@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" type="text/css" href="styles/4-common.css">
-    <link rel="stylesheet" type="text/css" href="styles/3-header.css">
-    <link rel="stylesheet" type="text/css" href="styles/3-footer.css">
-    <link rel="stylesheet" type="text/css" href="styles/6-filters.css">
-    <link type="text/css" rel="stylesheet" href="styles/8-places.css">
-    <link rel="icon" href="images/icon.png" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/8-places.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" />
     <title>HBnB</title>
   </head>
   <body>
@@ -61,7 +61,7 @@
 	      </div>
 	        <div class="user">
             <b>Owner:</b> Kevin Yook
-          </div>
+          </div>|
           <div class="description">
 	        This is my personal house in Korea please stay as much as you want if you come to Korea. Also as a complementary there is a tour guide who will help guide you though Seoul me.
           </div>
